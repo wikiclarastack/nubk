@@ -3,214 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nu777</title>
+    <title>Nu777 Ultra</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: #000; display: flex; justify-content: center; align-items: center; height: 100vh; color: white; overflow: hidden; }
 
-        body {
-            background-color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: white;
-            overflow: hidden;
-        }
-
-        .device {
-            width: 375px;
-            height: 812px;
-            background: #000;
-            border: 12px solid #222;
-            border-radius: 45px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .screen {
-            position: absolute;
-            inset: 0;
-            display: none;
-            flex-direction: column;
-            background: #000;
-        }
-
+        .device { width: 375px; height: 812px; background: #000; border: 12px solid #222; border-radius: 45px; position: relative; overflow: hidden; }
+        .screen { position: absolute; inset: 0; display: none; flex-direction: column; background: #000; z-index: 10; }
         .screen.active { display: flex; }
 
-        /* ANIMAÇÃO DE ENTRADA RÁPIDA */
-        #splash { 
-            background: #820ad1; 
-            z-index: 1000; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            animation: fadeOut 0.8s forwards 1.5s; /* Some sozinho após 1.5s */
-        }
-
-        .logo-pulse {
-            width: 90px;
-            animation: pulse 1s infinite alternate;
-        }
-
-        @keyframes pulse { from { transform: scale(1); opacity: 0.8; } to { transform: scale(1.1); opacity: 1; } }
+        /* SPLASH */
+        #splash { background: #820ad1; z-index: 1000; justify-content: center; align-items: center; animation: fadeOut 0.5s forwards 1.2s; }
         @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
 
-        /* ESTILO APP */
-        #onboarding { background: white; color: black; padding: 60px 25px; }
-        .btn-purple { background: #820ad1; color: white; border: none; padding: 18px; border-radius: 30px; font-weight: 700; width: 100%; cursor: pointer; margin-top: 30px; }
+        /* ONBOARDING & CADASTRO */
+        .bg-white { background: white; color: black; padding: 60px 25px; }
+        input { width: 100%; padding: 15px; border: none; border-bottom: 2px solid #eee; margin-bottom: 20px; font-size: 1rem; outline: none; transition: 0.3s; }
+        input:focus { border-bottom-color: #820ad1; }
+        .btn-purple { background: #820ad1; color: white; border: none; padding: 18px; border-radius: 30px; font-weight: 700; width: 100%; cursor: pointer; }
 
-        #login { padding: 40px 25px; align-items: center; }
-        .pin-dots { display: flex; gap: 15px; margin: 40px 0; }
-        .dot { width: 14px; height: 14px; border: 2px solid #820ad1; border-radius: 50%; }
+        /* DASHBOARD ELEMENTS */
+        header { background: #820ad1; padding: 50px 25px 25px; }
+        .main-scroll { flex: 1; overflow-y: auto; padding-bottom: 90px; scrollbar-width: none; }
+        .card { background: #121212; padding: 20px; margin: 15px 20px; border-radius: 12px; }
+        .val { font-size: 1.5rem; font-weight: 700; margin-top: 8px; }
+
+        /* NAV BOTTOM */
+        .nav-bar { position: absolute; bottom: 0; width: 100%; height: 75px; background: rgba(0,0,0,0.95); display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #222; z-index: 500; }
+        .nav-item { color: #888; text-align: center; font-size: 1.2rem; cursor: pointer; }
+        .nav-item.active { color: #820ad1; }
+
+        /* PIN KEYPAD */
+        .numpad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 280px; margin: 20px auto; }
+        .key { height: 70px; background: #111; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: 600; cursor: pointer; }
+        .dot { width: 12px; height: 12px; border: 2px solid #820ad1; border-radius: 50%; margin: 0 8px; }
         .dot.fill { background: #820ad1; }
 
-        .numpad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; max-width: 280px; }
-        .key { height: 70px; background: #111; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: 600; cursor: pointer; }
+        /* STATUS BAR */
+        .status-bar { position: absolute; top: 0; width: 100%; height: 40px; padding: 0 30px; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: 600; z-index: 5000; }
 
-        header { background: #820ad1; padding: 50px 25px 30px; }
-        .card-box { background: #121212; padding: 25px; margin: 15px 20px; border-radius: 15px; }
-        
-        .modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.98); z-index: 2000; display: none; flex-direction: column; align-items: center; padding-top: 80px; }
-        
-        #receipt { background: white; color: black; z-index: 3000; }
-        .data-row { display: flex; justify-content: space-between; padding: 15px 0; border-top: 1px solid #f0f0f0; }
-
-        [contenteditable="true"] { outline: none; }
+        [contenteditable="true"] { outline: none; border-bottom: 1px dashed #444; }
     </style>
 </head>
 <body>
 
     <div class="device">
-        <div style="position: absolute; width: 100%; height: 40px; padding: 0 30px; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: 600; z-index: 4000; color: inherit;" id="status-bar">
-            <span id="clock">18:30</span>
+        <div class="status-bar" id="status-bar">
+            <span id="clock">12:00</span>
             <div style="display: flex; gap: 5px;"><i class="fa-solid fa-signal"></i><i class="fa-solid fa-wifi"></i><i class="fa-solid fa-battery-full"></i></div>
         </div>
 
         <div id="splash" class="screen active">
-            <img src="https://logodownload.org/wp-content/uploads/2019/08/nubank-logo-2-1532x1536.png" class="logo-pulse">
+            <img src="https://logodownload.org/wp-content/uploads/2019/08/nubank-logo-2-1532x1536.png" width="90">
         </div>
 
-        <div id="onboarding" class="screen active">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 50px;">
-                <img src="https://logodownload.org/wp-content/uploads/2019/08/nubank-logo-0-1-1536x1536.png" width="40">
-                <span style="color:#820ad1; font-weight:700">Brasil <i class="fa-solid fa-chevron-down"></i></span>
-            </div>
-            <div style="margin-top: 40px;">
-                <h1 style="font-size: 2rem; font-weight: 700;">Um mundo financeiro sem complexidades</h1>
-                <button class="btn-purple" onclick="showScreen('login')">Começar</button>
-            </div>
-        </div>
-
-        <div id="login" class="screen">
-            <img src="https://logodownload.org/wp-content/uploads/2019/08/nubank-logo-0-1-1536x1536.png" width="50" style="margin-top: 50px;">
-            <p style="margin-top: 30px; font-weight: 600;">Olá, <span contenteditable="true">Mano 777</span></p>
-            <div class="pin-dots" id="login-dots">
-                <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-            </div>
-            <div class="numpad">
-                <div class="key" onclick="typePin(1)">1</div><div class="key" onclick="typePin(2)">2</div><div class="key" onclick="typePin(3)">3</div>
-                <div class="key" onclick="typePin(4)">4</div><div class="key" onclick="typePin(5)">5</div><div class="key" onclick="typePin(6)">6</div>
-                <div class="key" onclick="typePin(7)">7</div><div class="key" onclick="typePin(8)">8</div><div class="key" onclick="typePin(9)">9</div>
-                <div></div><div class="key" onclick="typePin(0)">0</div><div class="key" onclick="del()"><i class="fa-solid fa-delete-left"></i></div>
-            </div>
-        </div>
-
-        <div id="dash" class="screen">
-            <header>
-                <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-                    <div style="width:45px; height:45px; background:rgba(255,255,255,0.2); border-radius:50%; display:flex; justify-content:center; align-items:center;"><i class="fa-regular fa-user"></i></div>
-                    <div style="display:flex; gap:20px"><i class="fa-regular fa-eye-slash"></i><i class="fa-regular fa-circle-question"></i><i class="fa-regular fa-envelope"></i></div>
-                </div>
-                <p style="font-weight:700">Olá, <span contenteditable="true">Mano 777</span></p>
-            </header>
-            <div class="card-box" onclick="showConfirm()">
-                <p style="font-weight:600; font-size: 1.1rem">Conta <i class="fa-solid fa-chevron-right" style="float:right; color:#666"></i></p>
-                <p style="font-size: 1.6rem; font-weight: 700; margin-top: 10px;">R$ <span contenteditable="true">7.450,25</span></p>
-            </div>
-            <div style="padding: 0 20px; display: flex; gap: 15px;">
-                <div style="text-align:center" onclick="showConfirm()"><div style="width:70px; height:70px; background:#121212; border-radius:50%; display:flex; justify-content:center; align-items:center; margin-bottom:5px; color:#820ad1"><i class="fa-solid fa-pix"></i></div><span style="font-size:0.7rem; font-weight:600">Área Pix</span></div>
-            </div>
-        </div>
-
-        <div id="confirm-modal" class="modal-overlay">
+        <div id="onboarding" class="screen active bg-white">
             <img src="https://logodownload.org/wp-content/uploads/2019/08/nubank-logo-0-1-1536x1536.png" width="45">
-            <p style="text-align:center; padding: 40px; font-weight:600">Digite sua senha de 4 dígitos</p>
-            <div class="pin-dots" id="confirm-dots">
+            <h1 style="margin: 40px 0 20px; font-size: 2rem;">Um mundo financeiro sem complexidades.</h1>
+            <button class="btn-purple" onclick="showScreen('cadastro')">Começar</button>
+            <p style="text-align: center; margin-top: 20px; color: #820ad1; font-weight: 600;" onclick="showScreen('login')">Já tenho conta</p>
+        </div>
+
+        <div id="cadastro" class="screen bg-white">
+            <i class="fa-solid fa-arrow-left" onclick="showScreen('onboarding')" style="margin-bottom: 30px; font-size: 1.2rem;"></i>
+            <h2>Qual seu nome completo?</h2>
+            <input type="text" id="reg-name" placeholder="Nome Sobrenome">
+            <h2>E seu CPF?</h2>
+            <input type="tel" id="reg-cpf" placeholder="000.000.000-00">
+            <button class="btn-purple" onclick="finalizarCadastro()">Continuar</button>
+        </div>
+
+        <div id="login" class="screen" style="padding: 60px 25px; align-items: center;">
+            <img src="https://logodownload.org/wp-content/uploads/2019/08/nubank-logo-0-1-1536x1536.png" width="45">
+            <p style="margin: 30px 0 10px;">Olá, <span id="user-display">Mano 777</span></p>
+            <div style="display: flex; margin-bottom: 30px;">
                 <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
             </div>
             <div class="numpad">
-                <div class="key" onclick="typeConfirm(1)">1</div><div class="key" onclick="typeConfirm(2)">2</div><div class="key" onclick="typeConfirm(3)">3</div>
-                <div class="key" onclick="typeConfirm(4)">4</div><div class="key" onclick="typeConfirm(5)">5</div><div class="key" onclick="typeConfirm(6)">6</div>
-                <div class="key" onclick="typeConfirm(7)">7</div><div class="key" onclick="typeConfirm(8)">8</div><div class="key" onclick="typeConfirm(9)">9</div>
-                <div class="key" onclick="hideConfirm()">✕</div><div class="key" onclick="typeConfirm(0)">0</div>
+                <div class="key" onclick="press(1)">1</div><div class="key" onclick="press(2)">2</div><div class="key" onclick="press(3)">3</div>
+                <div class="key" onclick="press(4)">4</div><div class="key" onclick="press(5)">5</div><div class="key" onclick="press(6)">6</div>
+                <div class="key" onclick="press(7)">7</div><div class="key" onclick="press(8)">8</div><div class="key" onclick="press(9)">9</div>
+                <div></div><div class="key" onclick="press(0)">0</div><div class="key" onclick="del()"><i class="fa-solid fa-delete-left"></i></div>
             </div>
         </div>
 
-        <div id="receipt" class="screen">
-            <div style="padding: 50px 25px 20px; display:flex; justify-content:space-between">
-                <i class="fa-solid fa-xmark" onclick="showScreen('dash')"></i>
-                <i class="fa-solid fa-share-nodes"></i>
+        <div id="main-app" class="screen">
+            <header>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px">
+                    <div style="width:45px; height:45px; background:rgba(255,255,255,0.2); border-radius:50%; display:flex; justify-content:center; align-items:center;"><i class="fa-regular fa-user"></i></div>
+                    <div style="display:flex; gap:20px"><i class="fa-regular fa-eye-slash"></i><i class="fa-regular fa-circle-question"></i></div>
+                </div>
+                <p style="font-weight:700">Olá, <span id="user-dash">Mano 777</span></p>
+            </header>
+
+            <div class="main-scroll" id="content-home">
+                <div class="card" onclick="showTab('extrato')">
+                    <p style="font-weight:600">Conta <i class="fa-solid fa-chevron-right" style="float:right"></i></p>
+                    <p class="val">R$ <span contenteditable="true">7.450,25</span></p>
+                </div>
+                <div style="display:flex; gap:15px; padding:0 20px; overflow-x:auto">
+                    <div style="text-align:center"><div style="width:70px; height:70px; background:#121212; border-radius:50%; display:flex; justify-content:center; align-items:center; color:#820ad1"><i class="fa-solid fa-pix"></i></div><span style="font-size:0.7rem">Área Pix</span></div>
+                    <div style="text-align:center"><div style="width:70px; height:70px; background:#121212; border-radius:50%; display:flex; justify-content:center; align-items:center;"><i class="fa-solid fa-barcode"></i></div><span style="font-size:0.7rem">Pagar</span></div>
+                </div>
             </div>
-            <div style="padding: 25px;">
-                <img src="https://logodownload.org/wp-content/uploads/2019/08/nubank-logo-0-1-1536x1536.png" width="35" style="margin-bottom:20px">
-                <h2 style="font-size: 1.8rem; font-weight: 700; line-height: 1.1;">Comprovante de<br>pagamento</h2>
-                <p id="rec-date" style="color:#666; font-size:0.8rem; text-transform:uppercase; margin: 15px 0 30px;"></p>
-                <div class="data-row"><span>Valor</span><span style="font-weight:700">R$ <span contenteditable="true">160,00</span></span></div>
-                <div class="data-row"><span>Pagador</span><span style="font-weight:600" contenteditable="true">Mano 777 do Estilo</span></div>
+
+            <div class="main-scroll" id="content-extrato" style="display:none; padding-top:20px">
+                <h3 style="margin-left:20px">Histórico</h3>
+                <div class="card" style="display:flex; justify-content:space-between">
+                    <div><p style="font-weight:600">Transferência enviada</p><p style="font-size:0.8rem; color:#888">Ontem</p></div>
+                    <p style="font-weight:700">- R$ 160,00</p>
+                </div>
+                <div class="card" style="display:flex; justify-content:space-between">
+                    <div><p style="font-weight:600">Pix recebido</p><p style="font-size:0.8rem; color:#888">Hoje</p></div>
+                    <p style="color:#2ecc71; font-weight:700">+ R$ 2.500,00</p>
+                </div>
+            </div>
+
+            <div class="main-scroll" id="content-cards" style="display:none; padding-top:20px">
+                <h3 style="margin-left:20px">Seus cartões</h3>
+                <div class="card" style="background: linear-gradient(45deg, #820ad1, #a036e6); min-height:180px">
+                    <img src="https://logodownload.org/wp-content/uploads/2019/08/nubank-logo-2-1532x1536.png" width="40">
+                    <p style="margin-top:60px; font-weight:600; font-size:1.1rem" id="card-num">**** **** **** 7777</p>
+                    <p style="font-size:0.8rem" id="card-holder">MANO 777</p>
+                </div>
+                <button class="btn-purple" style="width:90%; margin: 10px 5%;" onclick="gerarCartao()">Gerar Cartão Virtual</button>
+            </div>
+
+            <div class="nav-bar">
+                <div class="nav-item active" onclick="showTab('home')"><i class="fa-solid fa-arrows-up-down"></i></div>
+                <div class="nav-item" onclick="showTab('cards')"><i class="fa-solid fa-credit-card"></i></div>
+                <div class="nav-item"><i class="fa-solid fa-bag-shopping"></i></div>
             </div>
         </div>
     </div>
 
     <script>
-        let pin = ""; let conf = ""; const PASS = "1315";
+        let pin = ""; const PASS = "1315";
+        let user = { name: "Mano 777", cpf: "" };
 
         function showScreen(id) {
-            document.querySelectorAll('.screen').forEach(s => {
-                if(s.id !== 'splash') s.classList.remove('active');
-            });
-            const target = document.getElementById(id);
-            target.classList.add('active');
-            // Ajusta cor da status bar dependendo da tela
-            document.getElementById('status-bar').style.color = (id === 'onboarding' || id === 'receipt') ? 'black' : 'white';
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.getElementById('status-bar').style.color = (id === 'onboarding' || id === 'cadastro') ? 'black' : 'white';
         }
 
-        function typePin(n) {
+        function finalizarCadastro() {
+            user.name = document.getElementById('reg-name').value || "Mano 777";
+            document.getElementById('user-display').innerText = user.name;
+            document.getElementById('user-dash').innerText = user.name;
+            document.getElementById('card-holder').innerText = user.name.toUpperCase();
+            showScreen('login');
+        }
+
+        function press(n) {
             if(pin.length < 4) {
                 pin += n;
-                updateDots('login-dots', pin.length);
-                if(pin === PASS) setTimeout(() => showScreen('dash'), 300);
-                else if(pin.length === 4) setTimeout(() => { pin = ""; updateDots('login-dots', 0); }, 500);
+                updateDots(pin.length);
+                if(pin === PASS) setTimeout(() => showScreen('main-app'), 300);
+                else if(pin.length === 4) setTimeout(() => { pin = ""; updateDots(0); }, 500);
             }
         }
 
-        function typeConfirm(n) {
-            if(conf.length < 4) {
-                conf += n;
-                updateDots('confirm-dots', conf.length);
-                if(conf === PASS) {
-                    setTimeout(() => { hideConfirm(); showScreen('receipt'); }, 300);
-                } else if(conf.length === 4) {
-                    setTimeout(() => { conf = ""; updateDots('confirm-dots', 0); }, 500);
-                }
-            }
-        }
-
-        function updateDots(id, len) {
-            const dots = document.querySelectorAll(`#${id} .dot`);
+        function updateDots(len) {
+            const dots = document.querySelectorAll('#login .dot');
             dots.forEach((d, i) => i < len ? d.classList.add('fill') : d.classList.remove('fill'));
         }
 
-        function del() { pin = pin.slice(0,-1); updateDots('login-dots', pin.length); }
-        function showConfirm() { document.getElementById('confirm-modal').style.display = 'flex'; }
-        function hideConfirm() { document.getElementById('confirm-modal').style.display = 'none'; conf = ""; updateDots('confirm-dots', 0); }
+        function del() { pin = pin.slice(0,-1); updateDots(pin.length); }
+
+        function showTab(tab) {
+            document.querySelectorAll('.main-scroll').forEach(c => c.style.display = 'none');
+            document.getElementById('content-' + tab).style.display = 'block';
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            if(tab === 'home') document.querySelectorAll('.nav-item')[0].classList.add('active');
+            if(tab === 'cards') document.querySelectorAll('.nav-item')[1].classList.add('active');
+        }
+
+        function gerarCartao() {
+            const num = Math.floor(Math.random() * 8999 + 1000) + " " + Math.floor(Math.random() * 8999 + 1000) + " " + Math.floor(Math.random() * 8999 + 1000) + " " + Math.floor(Math.random() * 8999 + 1000);
+            document.getElementById('card-num').innerText = num;
+        }
 
         function updateClock() {
             const d = new Date();
             document.getElementById('clock').innerText = d.toLocaleTimeString('pt-br', {hour:'2-digit', minute:'2-digit'});
-            document.getElementById('rec-date').innerText = d.toLocaleDateString('pt-br', {day:'2-digit', month:'short', year:'numeric'}).replace('.','');
         }
         setInterval(updateClock, 1000); updateClock();
     </script>
