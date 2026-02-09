@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NuBank WEB</title>
+    <title>NuBank Pro Emulator</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -42,47 +42,33 @@
 
         .screen.active { display: flex; }
 
-        #splash { 
-            background: #820ad1; 
-            z-index: 1000; 
-            justify-content: center; 
-            align-items: center; 
-            display: flex; 
-            cursor: pointer;
-        }
+        /* TELA DE SPLASH */
+        #splash { background: #820ad1; z-index: 1000; justify-content: center; align-items: center; display: flex; }
+        .loader { width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 1s linear infinite; margin-top: 25px; }
 
-        .loader { 
-            width: 40px; 
-            height: 40px; 
-            border: 4px solid rgba(255,255,255,0.3); 
-            border-top-color: #fff; 
-            border-radius: 50%; 
-            animation: spin 1s linear infinite; 
-            margin-top: 20px; 
-        }
-
+        /* ONBOARDING */
         #onboarding { background: white; color: black; padding: 60px 25px; }
         .welcome-text { font-size: 1.8rem; font-weight: 700; line-height: 1.2; margin-top: 20px; }
         .btn-purple { background: #820ad1; color: white; border: none; padding: 18px; border-radius: 30px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 30px; width: 100%; }
 
+        /* LOGIN */
         #login { padding: 40px 25px; align-items: center; }
         .pin-dots { display: flex; gap: 15px; margin: 40px 0; }
-        .dot { width: 15px; height: 15px; border: 2px solid #820ad1; border-radius: 50%; }
+        .dot { width: 14px; height: 14px; border: 2px solid #820ad1; border-radius: 50%; }
         .dot.fill { background: #820ad1; }
-
         .numpad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; max-width: 280px; }
         .key { height: 70px; background: #111; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: 600; cursor: pointer; }
 
+        /* DASHBOARD */
         header { background: #820ad1; padding: 50px 25px 30px; }
         .user-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .avatar { width: 45px; height: 45px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; justify-content: center; align-items: center; }
-        
         .main-content { flex: 1; overflow-y: auto; padding-bottom: 80px; }
         .card-box { background: #121212; padding: 25px; margin: 15px 20px; border-radius: 15px; }
         .balance-val { font-size: 1.6rem; font-weight: 700; margin-top: 10px; }
 
-        .modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: none; flex-direction: column; align-items: center; padding-top: 80px; }
-
+        /* MODAIS */
+        .modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.96); z-index: 2000; display: none; flex-direction: column; align-items: center; padding-top: 80px; }
         #receipt { background: white; color: black; }
         .receipt-body { padding: 25px; }
         .data-row { display: flex; justify-content: space-between; padding: 15px 0; border-top: 1px solid #f0f0f0; }
@@ -91,8 +77,7 @@
         .fade-in { animation: fadeIn 0.3s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        [contenteditable="true"] { outline: none; border-bottom: 1px dashed transparent; }
-        [contenteditable="true"]:focus { border-bottom-color: #820ad1; }
+        [contenteditable="true"] { outline: none; }
     </style>
 </head>
 <body>
@@ -103,26 +88,29 @@
             <div style="display: flex; gap: 5px;"><i class="fa-solid fa-signal"></i><i class="fa-solid fa-wifi"></i><i class="fa-solid fa-battery-full"></i></div>
         </div>
 
-        <div id="splash" class="screen active" onclick="showScreen('onboarding')">
+        <div id="splash" class="screen active">
             <div style="text-align: center;">
-                <svg width="80" height="80" viewBox="0 0 45 45" fill="white"><path d="M22.5 0C10.0736 0 0 10.0736 0 22.5C0 34.9264 10.0736 45 22.5 45C34.9264 45 45 34.9264 45 22.5C45 10.0736 34.9264 0 22.5 0ZM33.6441 24.1804C31.7821 28.5147 27.5306 31.5 22.5 31.5C18.6729 31.5 15.3409 29.8071 13.1493 27.1166L13.0643 27.0124V31.5H8.71875V13.5H13.0643V17.9304L13.1364 18.0195C15.3283 20.7229 18.6659 22.4286 22.5 22.4286C26.3341 22.4286 29.6717 20.7229 31.8636 18.0195L31.9357 17.9304V13.5H36.2812V22.5C36.2812 23.0683 36.2575 23.6309 36.2111 24.1872L33.6441 24.1804Z"/></svg>
+                <img src="https://logodownload.org/wp-content/uploads/2019/08/nubank-logo-2-1532x1536.png" width="90">
                 <div class="loader"></div>
-                <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.7;">Clique para pular</p>
             </div>
         </div>
 
         <div id="onboarding" class="screen">
-            <div style="display: flex; justify-content: space-between;">
-                <svg width="40" height="40" viewBox="0 0 45 45" fill="#820ad1"><path d="M22.5 0C10.0736 0 0 10.0736 0 22.5C0 34.9264 10.0736 45 22.5 45C34.9264 45 45 34.9264 45 22.5C45 10.0736 34.9264 0 22.5 0ZM33.6441 24.1804C31.7821 28.5147 27.5306 31.5 22.5 31.5C18.6729 31.5 15.3409 29.8071 13.1493 27.1166L13.0643 27.0124V31.5H8.71875V13.5H13.0643V17.9304L13.1364 18.0195C15.3283 20.7229 18.6659 22.4286 22.5 22.4286C26.3341 22.4286 29.6717 20.7229 31.8636 18.0195L31.9357 17.9304V13.5H36.2812V22.5C36.2812 23.0683 36.2575 23.6309 36.2111 24.1872L33.6441 24.1804Z"/></svg>
+            <div style="padding: 0 25px; display: flex; justify-content: space-between; align-items: center; margin-top: 60px;">
+                <img src="https://logodownload.org/wp-content/uploads/2019/08/nubank-logo-0-1-1536x1536.png" width="40">
                 <span style="color:#820ad1; font-weight:700">Brasil <i class="fa-solid fa-chevron-down"></i></span>
             </div>
-            <div style="margin: 40px 0; background: #f0f0f0; height: 300px; border-radius: 20px; display: flex; align-items: center; justify-content: center; color: #ccc;">[Imagem do Cartão]</div>
-            <h1 class="welcome-text">Um mundo financeiro sem complexidades</h1>
-            <button class="btn-purple" onclick="showScreen('login')">Começar</button>
+            <div style="margin: 40px 25px; background: #eee; height: 320px; border-radius: 20px; overflow: hidden;">
+                <img src="https://i.postimg.cc/9M8Y5N2S/nubank-cards.jpg" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div style="padding: 0 25px;">
+                <h1 class="welcome-text">Um mundo financeiro sem complexidades</h1>
+                <button class="btn-purple" onclick="showScreen('login')">Começar</button>
+            </div>
         </div>
 
         <div id="login" class="screen">
-            <svg width="50" height="50" viewBox="0 0 45 45" fill="#820ad1"><path d="M22.5 0C10.0736 0 0 10.0736 0 22.5C0 34.9264 10.0736 45 22.5 45C34.9264 45 45 34.9264 45 22.5C45 10.0736 34.9264 0 22.5 0ZM33.6441 24.1804C31.7821 28.5147 27.5306 31.5 22.5 31.5C18.6729 31.5 15.3409 29.8071 13.1493 27.1166L13.0643 27.0124V31.5H8.71875V13.5H13.0643V17.9304L13.1364 18.0195C15.3283 20.7229 18.6659 22.4286 22.5 22.4286C26.3341 22.4286 29.6717 20.7229 31.8636 18.0195L31.9357 17.9304V13.5H36.2812V22.5C36.2812 23.0683 36.2575 23.6309 36.2111 24.1872L33.6441 24.1804Z"/></svg>
+            <img src="https://logodownload.org/wp-content/uploads/2019/08/nubank-logo-0-1-1536x1536.png" width="50" style="margin-top: 40px;">
             <p style="margin: 30px 0 10px; font-weight: 600;">Olá, <span contenteditable="true">Mano 777</span></p>
             <p style="font-size: 0.9rem; opacity: 0.7;">Digite sua senha de 4 dígitos</p>
             <div class="pin-dots" id="login-dots">
@@ -150,15 +138,15 @@
                     <p class="balance-val">R$ <span contenteditable="true">7.450,25</span></p>
                 </div>
                 <div style="display:flex; gap:15px; padding: 10px 20px;">
-                    <div style="text-align:center" onclick="showConfirm()"><div style="width:70px; height:70px; background:#121212; border-radius:50%; display:flex; justify-content:center; align-items:center; margin-bottom:5px"><i class="fa-solid fa-pix"></i></div><span style="font-size:0.7rem">Área Pix</span></div>
-                    <div style="text-align:center"><div style="width:70px; height:70px; background:#121212; border-radius:50%; display:flex; justify-content:center; align-items:center; margin-bottom:5px"><i class="fa-solid fa-barcode"></i></div><span style="font-size:0.7rem">Pagar</span></div>
+                    <div style="text-align:center" onclick="showConfirm()"><div style="width:70px; height:70px; background:#121212; border-radius:50%; display:flex; justify-content:center; align-items:center; margin-bottom:5px; color:#820ad1"><i class="fa-solid fa-pix"></i></div><span style="font-size:0.7rem; font-weight:600">Área Pix</span></div>
+                    <div style="text-align:center"><div style="width:70px; height:70px; background:#121212; border-radius:50%; display:flex; justify-content:center; align-items:center; margin-bottom:5px"><i class="fa-solid fa-barcode"></i></div><span style="font-size:0.7rem; font-weight:600">Pagar</span></div>
                 </div>
             </div>
         </div>
 
         <div id="confirm-modal" class="modal-overlay">
-            <svg width="40" height="40" viewBox="0 0 45 45" fill="#820ad1"><path d="M22.5 0C10.0736 0 0 10.0736 0 22.5C0 34.9264 10.0736 45 22.5 45C34.9264 45 45 34.9264 45 22.5C45 10.0736 34.9264 0 22.5 0ZM33.6441 24.1804C31.7821 28.5147 27.5306 31.5 22.5 31.5C18.6729 31.5 15.3409 29.8071 13.1493 27.1166L13.0643 27.0124V31.5H8.71875V13.5H13.0643V17.9304L13.1364 18.0195C15.3283 20.7229 18.6659 22.4286 22.5 22.4286C26.3341 22.4286 29.6717 20.7229 31.8636 18.0195L31.9357 17.9304V13.5H36.2812V22.5C36.2812 23.0683 36.2575 23.6309 36.2111 24.1872L33.6441 24.1804Z"/></svg>
-            <p style="text-align:center; padding: 30px; font-weight:600">Confirme sua senha para continuar</p>
+            <img src="https://logodownload.org/wp-content/uploads/2019/08/nubank-logo-0-1-1536x1536.png" width="45">
+            <p style="text-align:center; padding: 40px; font-weight:600">Para realizar a transferência, digite sua senha de 4 dígitos</p>
             <div class="pin-dots" id="confirm-dots">
                 <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
             </div>
@@ -172,15 +160,16 @@
 
         <div id="receipt" class="screen">
             <div style="padding: 50px 25px 20px; display:flex; justify-content:space-between">
-                <i class="fa-solid fa-xmark" onclick="showScreen('dash')"></i>
+                <i class="fa-solid fa-xmark" style="font-size:1.4rem" onclick="showScreen('dash')"></i>
                 <i class="fa-solid fa-share-nodes"></i>
             </div>
             <div class="receipt-body">
-                <svg width="40" height="40" viewBox="0 0 45 45" fill="#820ad1"><path d="M22.5 0C10.0736 0 0 10.0736 0 22.5C0 34.9264 10.0736 45 22.5 45C34.9264 45 45 34.9264 45 22.5C45 10.0736 34.9264 0 22.5 0ZM33.6441 24.1804C31.7821 28.5147 27.5306 31.5 22.5 31.5C18.6729 31.5 15.3409 29.8071 13.1493 27.1166L13.0643 27.0124V31.5H8.71875V13.5H13.0643V17.9304L13.1364 18.0195C15.3283 20.7229 18.6659 22.4286 22.5 22.4286C26.3341 22.4286 29.6717 20.7229 31.8636 18.0195L31.9357 17.9304V13.5H36.2812V22.5C36.2812 23.0683 36.2575 23.6309 36.2111 24.1872L33.6441 24.1804Z"/></svg>
-                <h2 style="margin: 20px 0 10px; line-height:1">Comprovante de<br>pagamento</h2>
+                <img src="https://logodownload.org/wp-content/uploads/2019/08/nubank-logo-0-1-1536x1536.png" width="35" style="margin-bottom:20px">
+                <h2 style="margin: 0 0 10px; line-height:1; font-size: 1.8rem">Comprovante de<br>pagamento</h2>
                 <p id="rec-date" style="color:#666; font-size:0.8rem; text-transform:uppercase; margin-bottom:30px"></p>
                 <div class="data-row"><span>Valor</span><span style="font-weight:700">R$ <span contenteditable="true">160,00</span></span></div>
-                <div class="data-row"><span>Pagador</span><span style="color:#666" contenteditable="true">Mano 777 do Estilo</span></div>
+                <div class="data-row"><span>Pagador</span><span style="color:#666; font-weight:600" contenteditable="true">Mano 777 do Estilo</span></div>
+                <div class="data-row"><span>Conta</span><span style="color:#666" contenteditable="true">28906984-2</span></div>
             </div>
         </div>
     </div>
@@ -192,17 +181,24 @@
 
         function showScreen(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).style.display = 'flex';
             document.getElementById(id).classList.add('active', 'fade-in');
         }
 
-        setTimeout(() => showScreen('onboarding'), 2500);
+        // Timer de 3 segundos forçado para sair do splash
+        setTimeout(() => {
+            showScreen('onboarding');
+        }, 3000);
 
         function typePin(n) {
             if(pin.length < 4) {
                 pin += n;
                 updateDots('login-dots', pin.length);
-                if(pin === PASS) setTimeout(() => showScreen('dash'), 300);
-                else if(pin.length === 4) setTimeout(() => { pin = ""; updateDots('login-dots', 0); }, 500);
+                if(pin === PASS) {
+                    setTimeout(() => showScreen('dash'), 300);
+                } else if(pin.length === 4) {
+                    setTimeout(() => { pin = ""; updateDots('login-dots', 0); }, 500);
+                }
             }
         }
 
