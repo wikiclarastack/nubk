@@ -20,7 +20,6 @@
             overflow: hidden;
         }
 
-        /* MOLDURA DO SMARTPHONE */
         .device {
             width: 375px;
             height: 812px;
@@ -32,7 +31,6 @@
             box-shadow: 0 0 50px rgba(0,0,0,0.8);
         }
 
-        /* ESTADOS DE TELA */
         .screen {
             position: absolute;
             inset: 0;
@@ -44,87 +42,97 @@
 
         .screen.active { display: flex; }
 
-        /* 1. SPLASH SCREEN */
-        #splash { background: #820ad1; z-index: 1000; justify-content: center; align-items: center; display: flex; }
-        .loader { width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 1s linear infinite; margin-top: 20px; }
+        #splash { 
+            background: #820ad1; 
+            z-index: 1000; 
+            justify-content: center; 
+            align-items: center; 
+            display: flex; 
+            cursor: pointer;
+        }
 
-        /* 2. ONBOARDING (IGUAL A FOTO) */
-        #onboarding { background: white; color: black; padding: 60px 25px; text-align: left; }
-        .cards-img { width: 100%; margin: 40px 0; }
-        .welcome-text { font-size: 1.8rem; font-weight: 700; line-height: 1.2; margin-top: auto; }
-        .btn-purple { background: #820ad1; color: white; border: none; padding: 18px; border-radius: 30px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 30px; }
+        .loader { 
+            width: 40px; 
+            height: 40px; 
+            border: 4px solid rgba(255,255,255,0.3); 
+            border-top-color: #fff; 
+            border-radius: 50%; 
+            animation: spin 1s linear infinite; 
+            margin-top: 20px; 
+        }
 
-        /* 3. LOGIN / PIN */
+        #onboarding { background: white; color: black; padding: 60px 25px; }
+        .welcome-text { font-size: 1.8rem; font-weight: 700; line-height: 1.2; margin-top: 20px; }
+        .btn-purple { background: #820ad1; color: white; border: none; padding: 18px; border-radius: 30px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 30px; width: 100%; }
+
         #login { padding: 40px 25px; align-items: center; }
         .pin-dots { display: flex; gap: 15px; margin: 40px 0; }
-        .dot { width: 15px; height: 15px; border: 2px solid #820ad1; border-radius: 50%; transition: 0.2s; }
+        .dot { width: 15px; height: 15px; border: 2px solid #820ad1; border-radius: 50%; }
         .dot.fill { background: #820ad1; }
-        .numpad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; max-width: 280px; }
-        .key { height: 75px; background: #111; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: 600; cursor: pointer; }
 
-        /* 4. DASHBOARD */
+        .numpad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; max-width: 280px; }
+        .key { height: 70px; background: #111; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: 600; cursor: pointer; }
+
         header { background: #820ad1; padding: 50px 25px 30px; }
-        .user-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .user-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .avatar { width: 45px; height: 45px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; justify-content: center; align-items: center; }
         
         .main-content { flex: 1; overflow-y: auto; padding-bottom: 80px; }
-        .card-box { background: #121212; padding: 25px; margin: 15px 25px; border-radius: 15px; cursor: pointer; }
-        .balance-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 10px; display: flex; justify-content: space-between; }
-        .balance-val { font-size: 1.6rem; font-weight: 700; }
+        .card-box { background: #121212; padding: 25px; margin: 15px 20px; border-radius: 15px; }
+        .balance-val { font-size: 1.6rem; font-weight: 700; margin-top: 10px; }
 
-        /* MODAL SENHA PIX */
-        .modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; display: none; flex-direction: column; align-items: center; padding-top: 100px; }
+        .modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: none; flex-direction: column; align-items: center; padding-top: 80px; }
 
-        /* COMPROVANTE (BASEADO NA FOTO) */
         #receipt { background: white; color: black; }
         .receipt-body { padding: 25px; }
         .data-row { display: flex; justify-content: space-between; padding: 15px 0; border-top: 1px solid #f0f0f0; }
-        .footer-gray { background: #f5f6f7; padding: 25px; font-size: 0.8rem; margin-top: auto; }
 
-        /* ANIMAÇÕES */
         @keyframes spin { to { transform: rotate(360deg); } }
-        .fade-in { animation: fadeIn 0.4s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        [contenteditable="true"] { outline: none; border-bottom: 1px dashed #820ad1; }
+        [contenteditable="true"] { outline: none; border-bottom: 1px dashed transparent; }
+        [contenteditable="true"]:focus { border-bottom-color: #820ad1; }
     </style>
 </head>
 <body>
 
     <div class="device">
-        <div style="position: absolute; width: 100%; height: 40px; padding: 0 30px; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: 600; z-index: 2000;">
+        <div style="position: absolute; width: 100%; height: 40px; padding: 0 30px; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: 600; z-index: 3000;">
             <span id="clock">16:05</span>
             <div style="display: flex; gap: 5px;"><i class="fa-solid fa-signal"></i><i class="fa-solid fa-wifi"></i><i class="fa-solid fa-battery-full"></i></div>
         </div>
 
-        <div id="splash" class="screen active">
+        <div id="splash" class="screen active" onclick="showScreen('onboarding')">
             <div style="text-align: center;">
-                <img src="image_847269.png" width="100">
+                <svg width="80" height="80" viewBox="0 0 45 45" fill="white"><path d="M22.5 0C10.0736 0 0 10.0736 0 22.5C0 34.9264 10.0736 45 22.5 45C34.9264 45 45 34.9264 45 22.5C45 10.0736 34.9264 0 22.5 0ZM33.6441 24.1804C31.7821 28.5147 27.5306 31.5 22.5 31.5C18.6729 31.5 15.3409 29.8071 13.1493 27.1166L13.0643 27.0124V31.5H8.71875V13.5H13.0643V17.9304L13.1364 18.0195C15.3283 20.7229 18.6659 22.4286 22.5 22.4286C26.3341 22.4286 29.6717 20.7229 31.8636 18.0195L31.9357 17.9304V13.5H36.2812V22.5C36.2812 23.0683 36.2575 23.6309 36.2111 24.1872L33.6441 24.1804Z"/></svg>
                 <div class="loader"></div>
+                <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.7;">Clique para pular</p>
             </div>
         </div>
 
         <div id="onboarding" class="screen">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <img src="image_8472a3.png" width="45">
-                <span style="font-weight: 600; color: #820ad1">Brasil <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem"></i></span>
+            <div style="display: flex; justify-content: space-between;">
+                <svg width="40" height="40" viewBox="0 0 45 45" fill="#820ad1"><path d="M22.5 0C10.0736 0 0 10.0736 0 22.5C0 34.9264 10.0736 45 22.5 45C34.9264 45 45 34.9264 45 22.5C45 10.0736 34.9264 0 22.5 0ZM33.6441 24.1804C31.7821 28.5147 27.5306 31.5 22.5 31.5C18.6729 31.5 15.3409 29.8071 13.1493 27.1166L13.0643 27.0124V31.5H8.71875V13.5H13.0643V17.9304L13.1364 18.0195C15.3283 20.7229 18.6659 22.4286 22.5 22.4286C26.3341 22.4286 29.6717 20.7229 31.8636 18.0195L31.9357 17.9304V13.5H36.2812V22.5C36.2812 23.0683 36.2575 23.6309 36.2111 24.1872L33.6441 24.1804Z"/></svg>
+                <span style="color:#820ad1; font-weight:700">Brasil <i class="fa-solid fa-chevron-down"></i></span>
             </div>
-            <img src="image_95ad80.jpg" class="cards-img" style="border-radius: 10px; object-fit: cover; height: 350px;">
+            <div style="margin: 40px 0; background: #f0f0f0; height: 300px; border-radius: 20px; display: flex; align-items: center; justify-content: center; color: #ccc;">[Imagem do Cartão]</div>
             <h1 class="welcome-text">Um mundo financeiro sem complexidades</h1>
-            <button class="btn-purple" onclick="goToLogin()">Começar</button>
+            <button class="btn-purple" onclick="showScreen('login')">Começar</button>
         </div>
 
         <div id="login" class="screen">
-            <img src="image_847269.png" width="60" style="margin-bottom: 20px;">
-            <p style="font-weight: 600;">Digite sua senha de 4 dígitos</p>
-            <div class="pin-dots">
+            <svg width="50" height="50" viewBox="0 0 45 45" fill="#820ad1"><path d="M22.5 0C10.0736 0 0 10.0736 0 22.5C0 34.9264 10.0736 45 22.5 45C34.9264 45 45 34.9264 45 22.5C45 10.0736 34.9264 0 22.5 0ZM33.6441 24.1804C31.7821 28.5147 27.5306 31.5 22.5 31.5C18.6729 31.5 15.3409 29.8071 13.1493 27.1166L13.0643 27.0124V31.5H8.71875V13.5H13.0643V17.9304L13.1364 18.0195C15.3283 20.7229 18.6659 22.4286 22.5 22.4286C26.3341 22.4286 29.6717 20.7229 31.8636 18.0195L31.9357 17.9304V13.5H36.2812V22.5C36.2812 23.0683 36.2575 23.6309 36.2111 24.1872L33.6441 24.1804Z"/></svg>
+            <p style="margin: 30px 0 10px; font-weight: 600;">Olá, <span contenteditable="true">Mano 777</span></p>
+            <p style="font-size: 0.9rem; opacity: 0.7;">Digite sua senha de 4 dígitos</p>
+            <div class="pin-dots" id="login-dots">
                 <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
             </div>
             <div class="numpad">
-                <div class="key" onclick="press(1)">1</div><div class="key" onclick="press(2)">2</div><div class="key" onclick="press(3)">3</div>
-                <div class="key" onclick="press(4)">4</div><div class="key" onclick="press(5)">5</div><div class="key" onclick="press(6)">6</div>
-                <div class="key" onclick="press(7)">7</div><div class="key" onclick="press(8)">8</div><div class="key" onclick="press(9)">9</div>
-                <div></div><div class="key" onclick="press(0)">0</div><div class="key" onclick="backspace()"><i class="fa-solid fa-delete-left"></i></div>
+                <div class="key" onclick="typePin(1)">1</div><div class="key" onclick="typePin(2)">2</div><div class="key" onclick="typePin(3)">3</div>
+                <div class="key" onclick="typePin(4)">4</div><div class="key" onclick="typePin(5)">5</div><div class="key" onclick="typePin(6)">6</div>
+                <div class="key" onclick="typePin(7)">7</div><div class="key" onclick="typePin(8)">8</div><div class="key" onclick="typePin(9)">9</div>
+                <div></div><div class="key" onclick="typePin(0)">0</div><div class="key" onclick="del()"><i class="fa-solid fa-delete-left"></i></div>
             </div>
         </div>
 
@@ -132,164 +140,97 @@
             <header>
                 <div class="user-row">
                     <div class="avatar"><i class="fa-regular fa-user"></i></div>
-                    <div style="display: flex; gap: 20px;">
-                        <i class="fa-regular fa-eye-slash" id="eye" onclick="toggleEye()"></i>
-                        <i class="fa-regular fa-circle-question"></i>
-                        <i class="fa-regular fa-envelope"></i>
-                    </div>
+                    <div style="display:flex; gap:20px"><i class="fa-regular fa-eye-slash"></i><i class="fa-regular fa-circle-question"></i><i class="fa-regular fa-envelope"></i></div>
                 </div>
-                <p style="font-weight: 700; font-size: 1.1rem;">Olá, <span contenteditable="true">Mano 777</span></p>
+                <p style="font-weight:700">Olá, <span contenteditable="true">Mano 777</span></p>
             </header>
             <div class="main-content">
-                <div class="card-box" onclick="showConfirmation()">
-                    <div class="balance-title">Conta <i class="fa-solid fa-chevron-right" style="color:#666"></i></div>
-                    <div class="balance-val" id="mainSaldo">R$ <span contenteditable="true">7.450,25</span></div>
+                <div class="card-box" onclick="showConfirm()">
+                    <p style="font-weight:600">Conta <i class="fa-solid fa-chevron-right" style="float:right; font-size:0.8rem"></i></p>
+                    <p class="balance-val">R$ <span contenteditable="true">7.450,25</span></p>
                 </div>
-                <div style="display: flex; gap: 15px; padding: 0 25px; overflow-x: auto; scrollbar-width: none;">
-                    <div style="text-align: center; min-width: 80px;" onclick="showConfirmation()">
-                        <div style="width:75px; height:75px; background:#121212; border-radius:50%; display:flex; justify-content:center; align-items:center; margin-bottom:8px;"><i class="fa-solid fa-pix" style="font-size:1.5rem"></i></div>
-                        <span style="font-size:0.8rem; font-weight:600">Área Pix</span>
-                    </div>
-                    <div style="text-align: center; min-width: 80px;">
-                        <div style="width:75px; height:75px; background:#121212; border-radius:50%; display:flex; justify-content:center; align-items:center; margin-bottom:8px;"><i class="fa-solid fa-barcode" style="font-size:1.5rem"></i></div>
-                        <span style="font-size:0.8rem; font-weight:600">Pagar</span>
-                    </div>
-                </div>
-                <div class="card-box" style="margin-top: 30px;">
-                    <p style="color:#820ad1; font-weight:700; font-size:0.9rem">Cartão de Crédito</p>
-                    <p style="font-size:0.8rem; color:#999; margin:10px 0 5px;">Fatura atual</p>
-                    <p class="balance-val">R$ <span contenteditable="true">1.250,00</span></p>
+                <div style="display:flex; gap:15px; padding: 10px 20px;">
+                    <div style="text-align:center" onclick="showConfirm()"><div style="width:70px; height:70px; background:#121212; border-radius:50%; display:flex; justify-content:center; align-items:center; margin-bottom:5px"><i class="fa-solid fa-pix"></i></div><span style="font-size:0.7rem">Área Pix</span></div>
+                    <div style="text-align:center"><div style="width:70px; height:70px; background:#121212; border-radius:50%; display:flex; justify-content:center; align-items:center; margin-bottom:5px"><i class="fa-solid fa-barcode"></i></div><span style="font-size:0.7rem">Pagar</span></div>
                 </div>
             </div>
         </div>
 
         <div id="confirm-modal" class="modal-overlay">
-            <img src="image_847269.png" width="50">
-            <p style="margin: 30px 0; font-weight: 600; text-align: center; padding: 0 40px;">Confirme sua senha de 4 dígitos para realizar a transação</p>
+            <svg width="40" height="40" viewBox="0 0 45 45" fill="#820ad1"><path d="M22.5 0C10.0736 0 0 10.0736 0 22.5C0 34.9264 10.0736 45 22.5 45C34.9264 45 45 34.9264 45 22.5C45 10.0736 34.9264 0 22.5 0ZM33.6441 24.1804C31.7821 28.5147 27.5306 31.5 22.5 31.5C18.6729 31.5 15.3409 29.8071 13.1493 27.1166L13.0643 27.0124V31.5H8.71875V13.5H13.0643V17.9304L13.1364 18.0195C15.3283 20.7229 18.6659 22.4286 22.5 22.4286C26.3341 22.4286 29.6717 20.7229 31.8636 18.0195L31.9357 17.9304V13.5H36.2812V22.5C36.2812 23.0683 36.2575 23.6309 36.2111 24.1872L33.6441 24.1804Z"/></svg>
+            <p style="text-align:center; padding: 30px; font-weight:600">Confirme sua senha para continuar</p>
             <div class="pin-dots" id="confirm-dots">
                 <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
             </div>
-            <div class="numpad" style="margin-top: 20px;">
-                <div class="key" onclick="pressConfirm(1)">1</div><div class="key" onclick="pressConfirm(2)">2</div><div class="key" onclick="pressConfirm(3)">3</div>
-                <div class="key" onclick="pressConfirm(4)">4</div><div class="key" onclick="pressConfirm(5)">5</div><div class="key" onclick="pressConfirm(6)">6</div>
-                <div class="key" onclick="pressConfirm(7)">7</div><div class="key" onclick="pressConfirm(8)">8</div><div class="key" onclick="pressConfirm(9)">9</div>
-                <div></div><div class="key" onclick="pressConfirm(0)">0</div><div class="key" onclick="closeConfirm()">✕</div>
+            <div class="numpad">
+                <div class="key" onclick="typeConfirm(1)">1</div><div class="key" onclick="typeConfirm(2)">2</div><div class="key" onclick="typeConfirm(3)">3</div>
+                <div class="key" onclick="typeConfirm(4)">4</div><div class="key" onclick="typeConfirm(5)">5</div><div class="key" onclick="typeConfirm(6)">6</div>
+                <div class="key" onclick="typeConfirm(7)">7</div><div class="key" onclick="typeConfirm(8)">8</div><div class="key" onclick="typeConfirm(9)">9</div>
+                <div class="key" onclick="hideConfirm()">✕</div><div class="key" onclick="typeConfirm(0)">0</div>
             </div>
         </div>
 
         <div id="receipt" class="screen">
-            <div style="padding: 50px 25px 20px; display: flex; justify-content: space-between; align-items: center;">
-                <i class="fa-solid fa-xmark" style="font-size: 1.5rem;" onclick="showDash()"></i>
+            <div style="padding: 50px 25px 20px; display:flex; justify-content:space-between">
+                <i class="fa-solid fa-xmark" onclick="showScreen('dash')"></i>
                 <i class="fa-solid fa-share-nodes"></i>
             </div>
             <div class="receipt-body">
-                <img src="image_8472a3.png" width="40" style="margin-bottom: 20px;">
-                <h2 style="font-size: 1.8rem; font-weight: 700; line-height: 1.1;">Comprovante de<br>pagamento</h2>
-                <p style="color: #666; font-size: 0.9rem; text-transform: uppercase; margin: 10px 0 30px;" contenteditable="true">09 FEV 2026</p>
-                
+                <svg width="40" height="40" viewBox="0 0 45 45" fill="#820ad1"><path d="M22.5 0C10.0736 0 0 10.0736 0 22.5C0 34.9264 10.0736 45 22.5 45C34.9264 45 45 34.9264 45 22.5C45 10.0736 34.9264 0 22.5 0ZM33.6441 24.1804C31.7821 28.5147 27.5306 31.5 22.5 31.5C18.6729 31.5 15.3409 29.8071 13.1493 27.1166L13.0643 27.0124V31.5H8.71875V13.5H13.0643V17.9304L13.1364 18.0195C15.3283 20.7229 18.6659 22.4286 22.5 22.4286C26.3341 22.4286 29.6717 20.7229 31.8636 18.0195L31.9357 17.9304V13.5H36.2812V22.5C36.2812 23.0683 36.2575 23.6309 36.2111 24.1872L33.6441 24.1804Z"/></svg>
+                <h2 style="margin: 20px 0 10px; line-height:1">Comprovante de<br>pagamento</h2>
+                <p id="rec-date" style="color:#666; font-size:0.8rem; text-transform:uppercase; margin-bottom:30px"></p>
                 <div class="data-row"><span>Valor</span><span style="font-weight:700">R$ <span contenteditable="true">160,00</span></span></div>
-                <div class="data-row"><span>Pagador</span><span style="font-weight:600; color:#666" contenteditable="true">Mano 777 do Estilo</span></div>
-                <div class="data-row"><span>Conta</span><span style="font-weight:600; color:#666" contenteditable="true">28906984-2</span></div>
-            </div>
-            <div class="footer-gray">
-                <strong>Nu Pagamentos S.A.</strong>
-                <p>CNPJ 18.236.120/0001-58</p>
-                <p style="margin-top:20px">Código de autenticação:</p>
-                <p style="font-weight:700" contenteditable="true">63174f9a-172e-4216-b493-9e64bbdfdc26</p>
-                <p style="color:#820ad1; font-weight:700; margin-top:20px; cursor:pointer">Me ajuda —></p>
+                <div class="data-row"><span>Pagador</span><span style="color:#666" contenteditable="true">Mano 777 do Estilo</span></div>
             </div>
         </div>
     </div>
 
     <script>
-        const PIN_CORRETO = "1315";
-        let inputPin = "";
-        let inputConfirm = "";
-
-        // Inicialização
-        setTimeout(() => {
-            showScreen('onboarding');
-        }, 3000);
+        let pin = "";
+        let conf = "";
+        const PASS = "1315";
 
         function showScreen(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active', 'fade-in');
         }
 
-        function goToLogin() { showScreen('login'); }
-        function showDash() { showScreen('dash'); }
+        setTimeout(() => showScreen('onboarding'), 2500);
 
-        // Lógica PIN Login
-        function press(n) {
-            if(inputPin.length < 4) {
-                inputPin += n;
-                updateDots('login', inputPin.length);
-                if(inputPin === PIN_CORRETO) {
-                    setTimeout(showDash, 300);
-                } else if(inputPin.length === 4) {
-                    setTimeout(resetPin, 500);
+        function typePin(n) {
+            if(pin.length < 4) {
+                pin += n;
+                updateDots('login-dots', pin.length);
+                if(pin === PASS) setTimeout(() => showScreen('dash'), 300);
+                else if(pin.length === 4) setTimeout(() => { pin = ""; updateDots('login-dots', 0); }, 500);
+            }
+        }
+
+        function typeConfirm(n) {
+            if(conf.length < 4) {
+                conf += n;
+                updateDots('confirm-dots', conf.length);
+                if(conf === PASS) {
+                    setTimeout(() => { hideConfirm(); showScreen('receipt'); }, 300);
+                } else if(conf.length === 4) {
+                    setTimeout(() => { conf = ""; updateDots('confirm-dots', 0); }, 500);
                 }
             }
         }
 
-        // Lógica Senha de Confirmação (PIX)
-        function pressConfirm(n) {
-            if(inputConfirm.length < 4) {
-                inputConfirm += n;
-                const dots = document.querySelectorAll('#confirm-dots .dot');
-                dots[inputConfirm.length - 1].classList.add('fill');
-                
-                if(inputConfirm === PIN_CORRETO) {
-                    setTimeout(() => {
-                        closeConfirm();
-                        showScreen('receipt');
-                    }, 500);
-                } else if(inputConfirm.length === 4) {
-                    setTimeout(() => {
-                        inputConfirm = "";
-                        dots.forEach(d => d.classList.remove('fill'));
-                    }, 500);
-                }
-            }
-        }
-
-        function updateDots(screenId, len) {
-            const dots = document.querySelectorAll(`#${screenId} .dot`);
+        function updateDots(id, len) {
+            const dots = document.querySelectorAll(`#${id} .dot`);
             dots.forEach((d, i) => i < len ? d.classList.add('fill') : d.classList.remove('fill'));
         }
 
-        function resetPin() {
-            inputPin = "";
-            updateDots('login', 0);
-        }
-
-        function backspace() {
-            inputPin = inputPin.slice(0, -1);
-            updateDots('login', inputPin.length);
-        }
-
-        function toggleEye() {
-            const eye = document.getElementById('eye');
-            const saldo = document.getElementById('mainSaldo');
-            if(eye.classList.contains('fa-eye-slash')) {
-                eye.className = 'fa-regular fa-eye';
-                saldo.innerHTML = '<div style="width:140px; height:25px; background:#222; border-radius:4px"></div>';
-            } else {
-                eye.className = 'fa-regular fa-eye-slash';
-                saldo.innerHTML = 'R$ <span contenteditable="true">7.450,25</span>';
-            }
-        }
-
-        function showConfirmation() { document.getElementById('confirm-modal').style.display = 'flex'; }
-        function closeConfirm() { 
-            document.getElementById('confirm-modal').style.display = 'none'; 
-            inputConfirm = "";
-            document.querySelectorAll('#confirm-dots .dot').forEach(d => d.classList.remove('fill'));
-        }
+        function del() { pin = pin.slice(0,-1); updateDots('login-dots', pin.length); }
+        function showConfirm() { document.getElementById('confirm-modal').style.display = 'flex'; }
+        function hideConfirm() { document.getElementById('confirm-modal').style.display = 'none'; conf = ""; updateDots('confirm-dots', 0); }
 
         function updateClock() {
-            const now = new Date();
-            document.getElementById('clock').innerText = now.toLocaleTimeString('pt-br', {hour:'2-digit', minute:'2-digit'});
+            const d = new Date();
+            document.getElementById('clock').innerText = d.toLocaleTimeString('pt-br', {hour:'2-digit', minute:'2-digit'});
+            document.getElementById('rec-date').innerText = d.toLocaleDateString('pt-br', {day:'2-digit', month:'short', year:'numeric'}).replace('.','');
         }
         setInterval(updateClock, 1000);
         updateClock();
